@@ -1,0 +1,6 @@
+tests\CompositeTest.class
+tests\CommandTest.class
+tests\DAOTest.class
+tests\BuilderTest.class
+tests\StrategyTest.class
+tests\DecoratorTest.class
