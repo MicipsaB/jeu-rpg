@@ -16,28 +16,28 @@ public class Main {
         System.out.println("=== RPG Project Demo ===");
 
         // Utilisation du Builder
-        ConcreteCharacter spiderMan = new CharacterBuilder()
-                .setName("Spider-Man")
+        ConcreteCharacter personnage1 = new CharacterBuilder()
+                .setName("harley")
                 .setStrength(10)
                 .setAgility(8)
                 .setIntelligence(6)
                 .build();
 
-        ConcreteCharacter greenGoblin = new CharacterBuilder()
-                .setName("Green-Goblin")
+        ConcreteCharacter personnage2 = new CharacterBuilder()
+                .setName("robin")
                 .setStrength(7)
                 .setAgility(5)
                 .setIntelligence(9)
                 .build();
 
         // Ajout de décorateurs
-        ICharacter invisibleHero = new InvisibilityDecorator(spiderMan);
-        ICharacter fireVillain = new FireResistDecorator(new TelepathyDecorator(greenGoblin));
+        ICharacter invisibleHero = new InvisibilityDecorator(personnage1);
+        ICharacter fireVillain = new FireResistDecorator(new TelepathyDecorator(personnage2));
 
         // DAO
         CharacterDAO dao = new CharacterDAO();
-        dao.save(new CharacterData(spiderMan));
-        dao.save(new CharacterData(greenGoblin));
+        dao.save(new CharacterData(personnage1));
+        dao.save(new CharacterData(personnage2));
         System.out.println("DAO findAll: " + dao.findAll().size() + " personnages sauvegardés.");
 
         // Composite: Groupe
@@ -49,11 +49,11 @@ public class Main {
         // Commandes + Observers
         CommandManager manager = new CommandManager();
         CombatLog log = new CombatLog();
-        spiderMan.addObserver(log);
-        greenGoblin.addObserver(log);
+        personnage1.addObserver(log);
+        personnage2.addObserver(log);
 
-        manager.execute(new AttackCommand(spiderMan, greenGoblin, new BasicAttackStrategy()));
-        manager.execute(new DefendCommand(greenGoblin));
+        manager.execute(new AttackCommand(personnage1, personnage2, new BasicAttackStrategy()));
+        manager.execute(new DefendCommand(personnage2));
 
         manager.saveHistory("history.log");
         System.out.println("History saved. Replay:");
